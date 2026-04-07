@@ -1,7 +1,12 @@
 aid: american-international
-url: https://raw.githubusercontent.com/api-evangelist/american-international/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/american-international/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.american-international.com
+description: >-
+  Somos una empresa dedicada a la importación y exportación de productos del área
+  de la construcción y alimenticios, desde y hacia cualquier parte del mundo, especialmente
+  en América Latina e Islas del Caribe.
