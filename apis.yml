@@ -21,6 +21,8 @@ image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 apis: []
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/aig
   - type: Website
     url: https://www.aig.com
   - type: Features
