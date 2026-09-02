@@ -1,0 +1,68 @@
+generated: '2026-09-02'
+method: probed
+source: anonymous probes of AIG's gateway and identity hosts (2026-09-02); no AIG contract exists
+provider: American International Group (AIG)
+providerId: american-international
+summary: >-
+  AIG publishes no API reference and no machine-readable contract, so almost every cross-cutting
+  convention below is UNDOCUMENTED rather than absent — the difference matters. What could be
+  established anonymously is the auth style and the gateway's rejection envelope; everything that
+  lives inside an authenticated call is unobservable.
+auth_style:
+  scheme: OAuth 2.0 bearer token
+  header: 'Authorization: Bearer <token>'
+  issuer: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7
+  evidence: >-
+    The gateway's own 400 names the missing header — "Protect Proxy via okta Service Policy: The
+    message does not contain the Authorization header".
+  see: authentication/american-international-authentication.yml
+idempotency:
+  supported: unknown
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    Undocumented. No idempotency key header is described anywhere AIG publishes, and no
+    authenticated call could be observed. No Idempotency pointer is emitted — an unverified
+    idempotency claim would be worse than the gap.
+pagination:
+  style: unknown
+  params: []
+  response_fields: []
+  note: Undocumented; no contract or reference describes a collection response.
+field_expansion:
+  supported: unknown
+metadata:
+  supported: unknown
+request_id_tracing:
+  header: null
+  note: >-
+    No correlation or request-id header was returned on any anonymous response from
+    commercial.api.aig.com.
+versioning:
+  scheme: unknown
+  note: The one observable route carries no version segment. See lifecycle/.
+error_envelope:
+  format: vendor
+  shape: '{"error": "<sentence>"}' 
+  rfc9457: false
+  see: errors/american-international-problem-types.yml
+rate_limit_signalling:
+  headers: []
+  note: >-
+    None observed. See rate-limits/american-international-rate-limits.yml.
+reversibility:
+  grade: unknown
+  write_surface: unknown
+  reversal_operations: []
+  windows: []
+  note: >-
+    NOT `na` and NOT zero. AIG's gateway plainly fronts a transactional broker/producer application
+    — quoting, binding and policy servicing are write operations by nature — but AIG publishes no
+    contract, so no reversal operation and no reversal window can be named. Asserting a window here
+    would be exactly the error this field exists to prevent: an invented window in an insurance
+    context could cost a policyholder real money. The honest record is that the reversibility of
+    AIG's API is undiscoverable from outside.
+dry_run_mode:
+  supported: unknown
+  note: Undocumented. No sandbox or test mode is published.

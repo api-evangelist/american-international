@@ -1,0 +1,31 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, and api.github.com/orgs/aig (all probed 2026-09-02)
+provider: American International Group (AIG)
+providerId: american-international
+package_count: 0
+packages: []
+description: >-
+  AIG publishes no first-party client library on any public package registry, and operates no
+  public GitHub organization. There is no SDK, no helper library and no code sample repository to
+  wrap — consistent with an API surface that has no public contract.
+searched:
+  - registry: npm
+    query: registry.npmjs.org/-/v1/search?text=aig%20insurance
+    status: 200
+    result: >-
+      No first-party AIG package. Matches were unrelated third parties (an n8n node for the Indian
+      APISetu Tata AIG endpoint, an unrelated "aigateway-cli", and several other insurers' SDKs).
+  - registry: pypi
+    query: https://pypi.org/pypi/aig/json
+    status: 200
+    result: >-
+      The `aig` name is taken by an unrelated MIT-licensed package with a placeholder author. NOT
+      AIG the insurer. Recorded as a name collision, not a package.
+  - registry: github
+    query: https://api.github.com/orgs/aig
+    status: 404
+    result: No GitHub organization named `aig` exists.
+note: >-
+  No SDKs pointer is emitted, because there is no SDK. `package_count: 0` is a checked zero.

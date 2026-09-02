@@ -1,0 +1,24 @@
+generated: '2026-09-02'
+method: searched
+source: https://www.aig.com
+provider: American International Group (AIG)
+providerId: american-international
+plan_count: 0
+description: >-
+  AIG publishes no API plans, tiers, or rate card of any kind. There is no developer pricing page,
+  no self-service signup, and no metered API product. Access to AIG's commercial API gateway at
+  https://commercial.api.aig.com is provisioned to appointed brokers, producers and clients under
+  distribution and technology agreements, and the commercial relationship is priced on insurance
+  premium rather than on API consumption.
+plans: []
+note: >-
+  An honest zero, not an unchecked one. AIG's former developer portal host (developers.aig.com)
+  refuses TCP connections and developer.aig.com is an empty S3 bucket, so there is no surviving
+  public surface where an API price could be published.
+sources:
+  - url: https://www.aig.com
+    status: 200
+  - url: https://developers.aig.com/
+    status: '<no response — TCP connection refused>'
+  - url: https://developer.aig.com/
+    status: 404

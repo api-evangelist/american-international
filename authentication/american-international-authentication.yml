@@ -1,0 +1,105 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://auth1.customerpltfm.aig.com/.well-known/openid-configuration and
+  https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/oauth-authorization-server
+  (both HTTP 200, fetched anonymously 2026-09-02), plus an anonymous probe of
+  https://commercial.api.aig.com (HTTP 403)
+provider: American International Group (AIG)
+providerId: american-international
+summary: >-
+  AIG publishes no public API reference and no OpenAPI, so this profile is built entirely from the
+  identity metadata AIG's own Okta tenant serves anonymously. AIG's commercial API gateway
+  (commercial.api.aig.com) is live and rejects every unauthenticated request with a plain-text
+  403 "You are not authorized, Forbidden, Contact AIG HD" from an Okta-backed policy proxy.
+  Tokens are issued by AIG's customer identity platform at auth1.customerpltfm.aig.com. There is
+  no self-service signup — credentials are provisioned to appointed brokers, producers and clients
+  through AIG's portals and distribution agreements.
+schemes:
+  - id: aig_okta_oauth2
+    type: oauth2
+    standard: OAuth 2.0 (RFC 6749) + RFC 8414 authorization-server metadata
+    in: header
+    header: Authorization
+    scheme: Bearer
+    issuer: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7
+    discovery: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/oauth-authorization-server
+    endpoints:
+      authorization: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/authorize
+      token: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/token
+      introspection: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/introspect
+      revocation: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/revoke
+      logout: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/logout
+      device_authorization: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/device/authorize
+      jwks: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/keys
+    grant_types:
+      - authorization_code
+      - client_credentials
+      - refresh_token
+      - implicit
+      - password
+      - urn:ietf:params:oauth:grant-type:device_code
+      - urn:openid:params:grant-type:ciba
+    pkce:
+      supported: true
+      methods:
+        - S256
+    client_auth_methods:
+      - client_secret_basic
+      - client_secret_post
+      - client_secret_jwt
+      - private_key_jwt
+      - none
+    dpop:
+      supported: true
+      algs:
+        - RS256
+        - RS384
+        - RS512
+        - ES256
+        - ES384
+        - ES512
+    dynamic_client_registration:
+      endpoint: https://auth1.customerpltfm.aig.com/oauth2/v1/clients
+      anonymous: false
+      note: >-
+        The Okta tenant advertises an RFC 7591 registration_endpoint, but it is the standard Okta
+        org endpoint and requires an Okta API token. It is not an open registration surface for
+        third-party developers.
+  - id: aig_oidc
+    type: openIdConnect
+    standard: OpenID Connect Discovery 1.0
+    issuer: https://auth1.customerpltfm.aig.com
+    discovery: https://auth1.customerpltfm.aig.com/.well-known/openid-configuration
+    id_token_signing_algs:
+      - RS256
+    id_token_encryption_algs:
+      - RSA-OAEP-256
+      - RSA-OAEP-384
+      - RSA-OAEP-512
+    userinfo: https://auth1.customerpltfm.aig.com/oauth2/v1/userinfo
+    note: >-
+      The org-level issuer carries the standard OIDC scope set (openid, profile, email, address,
+      phone, offline_access, groups) plus Okta management scopes; it authenticates people into
+      AIG's portals rather than authorizing API calls.
+gateway:
+  host: https://commercial.api.aig.com
+  anonymous_status: 403
+  anonymous_body: 'You are not authorized, Forbidden, Contact AIG HD'
+  challenge_headers: none
+  finding: >-
+    The gateway does NOT emit an RFC 6750 WWW-Authenticate challenge or an RFC 9728
+    protected-resource-metadata pointer on its 403, so an agent that reaches the host has no
+    machine-readable way to learn where to get a token. The link between the gateway and the Okta
+    issuer had to be established by hand.
+onboarding:
+  self_service: false
+  public_signup: false
+  channel: >-
+    Credentials are provisioned through AIG's broker and producer portals (myAIG, the Producer
+    Management Portal) under a distribution or client agreement. There is no public developer
+    signup, no API key page, and no sandbox.
+gaps:
+  - No OpenAPI or public API reference documents which scheme applies to which operation.
+  - No RFC 9728 /.well-known/oauth-protected-resource on the gateway host (403 on every path).
+  - No security.txt — /.well-known/security.txt is 403 on www.aig.com and on the gateway.

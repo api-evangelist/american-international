@@ -1,0 +1,74 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/oauth-authorization-server
+  (HTTP 200, fetched anonymously 2026-09-02)
+provider: American International Group (AIG)
+providerId: american-international
+docs: null
+docs_note: >-
+  AIG publishes no scopes or permissions reference page. Every scope below is read verbatim from
+  the scopes_supported array of AIG's own anonymously-served authorization-server metadata; the
+  descriptions are the standard OIDC/Okta meanings, and the two AIG-specific scopes are recorded
+  with their meaning marked unknown rather than guessed.
+authorization_server: https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7
+scope_count: 13
+scopes:
+  - name: openid
+    description: OpenID Connect authentication; required to receive an ID token.
+    standard: true
+  - name: profile
+    description: Basic profile claims (name, preferred_username, locale, updated_at).
+    standard: true
+  - name: email
+    description: The email and email_verified claims.
+    standard: true
+  - name: address
+    description: The address claim.
+    standard: true
+  - name: phone
+    description: The phone_number and phone_number_verified claims.
+    standard: true
+  - name: offline_access
+    description: Issues a refresh token so the client can renew access without user interaction.
+    standard: true
+  - name: device_sso
+    description: Okta device single-sign-on; binds the token to a registered device.
+    standard: false
+    vendor: Okta
+  - name: interclient_access
+    description: >-
+      Okta token-exchange scope permitting one client's token to be exchanged for another client's.
+      AIG-configured; no AIG documentation states which clients it bridges.
+    standard: false
+    vendor: Okta
+  - name: emeasme
+    description: >-
+      AIG-specific custom scope. The name reads as EMEA + SME (small and medium enterprise), which
+      would match AIG's EMEA small-business lines, but AIG publishes nothing that states its meaning
+      or the resources it grants. Recorded as UNKNOWN — the reading is an observation, not a claim.
+    standard: false
+    vendor: AIG
+    meaning: unknown
+  - name: okta.myAccount.appAuthenticator.manage
+    description: Manage the user's own Okta app authenticator enrollment.
+    standard: false
+    vendor: Okta
+  - name: okta.myAccount.appAuthenticator.read
+    description: Read the user's own Okta app authenticator enrollment.
+    standard: false
+    vendor: Okta
+  - name: okta.myAccount.appAuthenticator.maintenance.manage
+    description: Manage maintenance state of the user's own Okta app authenticator.
+    standard: false
+    vendor: Okta
+  - name: okta.myAccount.appAuthenticator.maintenance.read
+    description: Read maintenance state of the user's own Okta app authenticator.
+    standard: false
+    vendor: Okta
+finding: >-
+  Of the 13 scopes AIG's customer-platform authorization server advertises, 11 are stock OIDC or
+  Okta platform scopes and exactly ONE (emeasme) is an AIG business scope. There is no scope that
+  names an insurance resource — no policy, quote, claim, certificate or producer scope is exposed
+  anonymously. Whatever authorization the commercial gateway applies is not expressed in the
+  discoverable scope set.

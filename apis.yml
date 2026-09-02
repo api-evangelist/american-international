@@ -8,6 +8,13 @@ description: >-
   solutions, and other financial services to commercial and individual customers worldwide.
   The company's offerings include casualty, property, cyber, professional liability,
   management liability, marine, aviation, energy, trade credit, and private client insurance.
+  AIG runs a live production API gateway at commercial.api.aig.com behind an Okta "Protect Proxy"
+  policy, and its customer identity host auth1.customerpltfm.aig.com serves anonymous OpenID Connect
+  and OAuth 2.0 authorization-server metadata. AIG publishes no OpenAPI, no public API reference,
+  no SDK and no self-service signup — API credentials are provisioned to appointed brokers,
+  producers and clients through myAIG and the Producer Management Portal. AIG's own developer
+  portal host, developers.aig.com, is still indexed by search engines but refused TCP connections
+  when probed on 2026-09-02.
 tags:
   - Insurance
   - Property Casualty
@@ -129,9 +136,107 @@ common:
         description: >-
           Integration with reinsurance markets and treaty reinsurers to manage AIG's
           risk retention and cession across global insurance programs.
+  - type: WellKnown
+    url: well-known/american-international-well-known.yml
+  - type: Authentication
+    url: authentication/american-international-authentication.yml
+  - type: OAuthScopes
+    url: scopes/american-international-scopes.yml
+  - type: Conformance
+    url: conformance/american-international-conformance.yml
+  - type: ErrorCatalog
+    url: errors/american-international-problem-types.yml
+  - type: Conventions
+    url: conventions/american-international-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/american-international-lifecycle.yml
+  - type: Packages
+    url: packages/american-international-packages.yml
+  - type: LLMsTxt
+    url: llms/american-international-llms.txt
+  - type: Plans
+    url: plans/american-international-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/american-international-rate-limits.yml
+  - type: VulnerabilityDisclosure
+    url: security/american-international-vulnerability-disclosure.yml
+  - name: AIG Vulnerability Disclosure Program
+    type: Security
+    url: https://www.aig.com/home/about/cyber-and-information-security/vulnerability-disclosure
+    description: >-
+      AIG's published vulnerability disclosure program; reports are submitted through the AIG
+      HackerOne platform at https://hackerone.com/aig. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Business Insurance
+    type: Documentation
+    url: https://www.aig.com/business
+    description: Commercial insurance products and risk solutions for businesses. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Individuals and Families
+    type: Documentation
+    url: https://www.aig.com/individual
+    description: Personal insurance products including travel, accident and private client. Verified HTTP 200 on 2026-09-02.
+  - name: myAIG Broker Portal
+    type: Portal
+    url: https://www.myaig.com
+    description: Online portal for North America brokers to access AIG services. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Producer Management Portal
+    type: Portal
+    url: https://www.producermanagementportal.aig.com
+    description: >-
+      Okta-authenticated portal for US and Canada producers; the host that fronts AIG's commercial
+      API gateway. Verified HTTP 200 on 2026-09-02.
+  - name: AIG IntelliRisk
+    type: Portal
+    url: https://www.aig.com/home/claims/intellirisk
+    description: IntelliRisk Advanced claims management platform. Verified HTTP 200 on 2026-09-02.
+  - name: Contact AIG
+    type: Support
+    url: https://www.aig.com/home/contact
+    description: AIG contact and support channels by product line and region. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Newsroom Stories
+    type: Blog
+    url: https://www.aig.com/home/newsroom/stories
+    description: AIG newsroom and stories. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Privacy Policy
+    type: PrivacyPolicy
+    url: https://www.aig.com/privacy-policy
+    description: AIG privacy policy and data practices. Verified HTTP 200 on 2026-09-02.
+  - name: AIG Terms of Use
+    type: TermsOfService
+    url: https://www.aig.com/terms-of-use
+    description: Terms and conditions for AIG services. Verified HTTP 200 on 2026-09-02.
 created: '2024-11-15'
-modified: '2026-04-19'
+modified: '2026-09-02'
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.23'
+x-duplicate-of:
+  slug: aig
+  repo: https://github.com/api-evangelist/aig
+  confidence: high
+  basis: >-
+    Same legal entity. `all/aig` and `all/american-international` both profile American
+    International Group, Inc. and both resolve to the same registrable domain, aig.com. The
+    2026-09-02 enrichment pass on american-international independently reproduced every host finding
+    already recorded under `aig`: commercial.api.aig.com answering HTTP 403 "You are not authorized,
+    Forbidden, Contact AIG HD", the same Okta authorization server at
+    auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7, the same 452-byte uniform /.well-known
+    403 on www.aig.com, and the same dead developers.aig.com. `aig` is the domain-derived slug and
+    carries the richer profile (an apis[] entry for the commercial gateway); this repo carries no
+    apis[] entry, deliberately, so the two do not publish competing API records for one company.
+  recommended_action: >-
+    Merge into `aig` and retire this slug. No competing apis[] entry was created here. Both slugs
+    are already published with score history, so the merge is a redirect problem, not a delete.
+  evidence:
+    - url: https://commercial.api.aig.com/
+      status: 403
+    - url: https://auth1.customerpltfm.aig.com/.well-known/openid-configuration
+      status: 200
+    - url: https://developers.aig.com/
+      status: '<no response — TCP connection refused>'
+  checked: '2026-09-02'
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

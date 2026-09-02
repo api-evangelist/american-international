@@ -1,0 +1,93 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  live HTTPS probes (2026-09-02) of every AIG host in apis.yml plus the API gateway and Okta
+  identity hosts reached from AIG's broker/producer portals
+provider: American International Group (AIG)
+providerId: american-international
+note: >-
+  www.aig.com sits behind an edge policy that answers HTTP 403 to EVERY /.well-known/* path with an
+  identical 452-byte Apache "403 Forbidden" body — known paths and nonsense paths alike — so no
+  discovery document can be read there and no conclusion about what AIG serves at that host is
+  possible. The real, anonymous hits are on AIG's Okta identity host,
+  auth1.customerpltfm.aig.com, which serves OpenID Connect and RFC 8414 authorization-server
+  metadata for both the org issuer and the customer-platform authorization server that fronts
+  AIG's commercial API gateway at commercial.api.aig.com.
+hit_count: 4
+hosts:
+  - host: auth1.customerpltfm.aig.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: american-international-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: american-international-oauth-authorization-server.json
+      - path: /oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/openid-configuration
+        status: 200
+        file: american-international-openid-configuration-pmp.json
+      - path: /oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/oauth-authorization-server
+        status: 200
+        file: american-international-oauth-authorization-server-pmp.json
+      - path: /.well-known/oauth-protected-resource
+        status: 405
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 405
+      - path: /.well-known/api-catalog
+        status: 405
+  - host: commercial.api.aig.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /openapi.json
+        status: 403
+  - host: www.aig.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /llms.txt
+        status: 404
+      - path: /openapi.json
+        status: 404
+  - host: developer.aig.com
+    documents:
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /openapi.json
+        status: 404
+      - path: /swagger.json
+        status: 404
+soft_404_control:
+  url: https://www.aig.com/.well-known/agent.json
+  status: 403
+  bytes: 452
+  finding: >-
+    Every /.well-known/* path on www.aig.com returns the same 452-byte edge 403 — a uniform deny,
+    not an SPA catch-all 200 — so this is a blocked path prefix, not a served surface.
+  second_control:
+    url: https://developer.aig.com/openapi.json
+    status: 404
+    body: '<Error><Code>NoSuchKey</Code>...<Key>index.html</Key>'
+    finding: >-
+      developer.aig.com resolves to an empty Amazon S3 website bucket that answers every path with
+      the same NoSuchKey error for index.html — a decommissioned host, not a docs site.

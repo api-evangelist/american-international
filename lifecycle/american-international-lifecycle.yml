@@ -1,0 +1,47 @@
+generated: '2026-09-02'
+method: probed
+source: live probes of AIG's website, gateway and identity hosts (2026-09-02)
+provider: American International Group (AIG)
+providerId: american-international
+versioning:
+  scheme: unknown
+  current: null
+  docs: null
+  note: >-
+    The one observable gateway route (/pmp-gateway/c2a/pmp-ext-gtw-api) carries no version segment,
+    and AIG publishes no versioning policy.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No deprecation, sunset or end-of-life policy is published for any AIG API surface.
+sla:
+  url: null
+  uptime_target: null
+  note: No API SLA or uptime commitment is published.
+status_page:
+  url: null
+  probed:
+    - url: https://status.aig.com/
+      status: '<no response — DNS/TCP failure>'
+    - url: https://aig.statuspage.io/
+      status: 200
+      finding: >-
+        Redirects to https://www.atlassian.com/software/statuspage — the Statuspage product page,
+        not an AIG status page. NOT a hit.
+  note: AIG operates no public API status page. No StatusPage pointer is emitted.
+retirements_observed:
+  - host: developers.aig.com
+    finding: >-
+      AIG's own developer portal host is still indexed by search engines (pages for a Direct Quote
+      API, a Product Configuration API and an API Catalog are in the index) but the host refuses TCP
+      connections on 443 and 80. The documented API surface has been withdrawn without a notice.
+    status: '<no response — TCP connection refused>'
+  - host: developer.aig.com
+    finding: >-
+      Resolves to an empty Amazon S3 website bucket that answers every path with NoSuchKey for
+      index.html. A decommissioned host left pointing at live infrastructure.
+    status: 404
+note: >-
+  The most significant lifecycle finding for AIG is a silent retirement: a developer portal that
+  search engines still surface, serving nothing. No Deprecation and no StatusPage pointer is
+  emitted, because AIG publishes neither.

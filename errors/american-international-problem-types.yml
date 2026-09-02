@@ -1,0 +1,57 @@
+generated: '2026-09-02'
+method: probed
+source: anonymous probes of https://commercial.api.aig.com (2026-09-02)
+provider: American International Group (AIG)
+providerId: american-international
+format: vendor
+format_note: >-
+  Not RFC 9457. The gateway returns either a bare text/html string or a single-key JSON object with
+  an `error` field. There is no `type`, `title`, `status`, `detail` or `instance` member, and the
+  Content-Type is application/json rather than application/problem+json.
+envelope:
+  json:
+    fields:
+      - name: error
+        type: string
+        description: A single human-readable sentence. No machine-readable code accompanies it.
+  text:
+    description: >-
+      Some rejections are returned as a 49-byte text/html body with no structure at all.
+problem_types:
+  - id: missing-authorization-header
+    status: 400
+    observed_at: https://commercial.api.aig.com/pmp-gateway/c2a/pmp-ext-gtw-api
+    content_type: application/json; charset=UTF-8
+    body: '{"error":"Protect Proxy via okta Service Policy: The message does not contain the Authorization header"}'
+    meaning: >-
+      The Okta "Protect Proxy" service policy rejected the call because no Authorization header was
+      present. Note the status is 400, not 401, and no WWW-Authenticate challenge is returned.
+    remediation: >-
+      Obtain a bearer token from AIG's authorization server
+      (https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/v1/token) and present it as
+      `Authorization: Bearer <token>`. Credentials are provisioned by AIG, not self-served.
+  - id: not-authorized
+    status: 403
+    observed_at: https://commercial.api.aig.com/
+    content_type: text/html; charset=iso-8859-1
+    body: 'You are not authorized, Forbidden, Contact AIG HD'
+    meaning: >-
+      The edge policy rejected the request outright. Returned for the host root and for every
+      unknown path, including /.well-known/* and /openapi.json.
+    remediation: Contact the AIG help desk; the path is not reachable without provisioned access.
+  - id: edge-well-known-deny
+    status: 403
+    observed_at: https://www.aig.com/.well-known/*
+    content_type: text/html; charset=iso-8859-1
+    body: 452-byte Apache "403 Forbidden" page
+    meaning: >-
+      www.aig.com's edge denies the entire /.well-known/ path prefix uniformly. This is a
+      configuration, not a per-document decision.
+    remediation: >-
+      Allow /.well-known/ through the edge so RFC 9116 security.txt and other discovery documents
+      can be served.
+gaps:
+  - No published error reference exists; every entry above was observed, not documented.
+  - >-
+    No authenticated response could be observed, so the error envelope of the applications behind
+    the proxy is unknown. Only the gateway's own rejections are catalogued here.

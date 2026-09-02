@@ -1,0 +1,100 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  AIG's anonymously-served OAuth 2.0 / OpenID Connect discovery documents at
+  auth1.customerpltfm.aig.com, plus anonymous probes of commercial.api.aig.com and www.aig.com
+provider: American International Group (AIG)
+providerId: american-international
+note: >-
+  Every assertion below is read from a document AIG serves, not from a marketing claim. AIG
+  publishes no OpenAPI, so nothing about the shape of its API payloads can be asserted at all —
+  those entries are recorded as unknown rather than false.
+standards:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      https://auth1.customerpltfm.aig.com/oauth2/aus1aaqj1zvwVDL2n5d7/.well-known/oauth-authorization-server
+      (HTTP 200) advertises authorization, token, introspection and revocation endpoints and the
+      authorization_code, client_credentials and refresh_token grants.
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: >-
+      /.well-known/oauth-authorization-server is served anonymously at both the org issuer and the
+      customer-platform authorization server (HTTP 200, application/json).
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: >-
+      https://auth1.customerpltfm.aig.com/.well-known/openid-configuration (HTTP 200) declares
+      issuer, authorization_endpoint, token_endpoint, userinfo_endpoint and jwks_uri, with RS256
+      id_token signing.
+  - id: pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: code_challenge_methods_supported = ["S256"] in both authorization-server metadata documents.
+  - id: dpop
+    name: OAuth 2.0 Demonstrating Proof of Possession (RFC 9449)
+    conforms: true
+    evidence: >-
+      dpop_signing_alg_values_supported = [RS256, RS384, RS512, ES256, ES384, ES512] in the
+      customer-platform authorization-server metadata.
+  - id: rfc7591
+    name: Dynamic Client Registration (RFC 7591)
+    conforms: partial
+    evidence: >-
+      registration_endpoint https://auth1.customerpltfm.aig.com/oauth2/v1/clients is advertised,
+      but it is the standard Okta org endpoint and requires an Okta API token — it is not open to
+      third-party clients.
+  - id: rfc9728
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: false
+    evidence: >-
+      https://commercial.api.aig.com/.well-known/oauth-protected-resource returns HTTP 403, and the
+      gateway's 403 carries no WWW-Authenticate challenge, so a client at the resource cannot
+      discover its authorization server.
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: false
+    evidence: >-
+      https://www.aig.com/.well-known/security.txt returns HTTP 403 (the whole /.well-known/ prefix
+      is denied), despite AIG operating a published vulnerability disclosure program on HackerOne.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: unknown
+    evidence: >-
+      commercial.api.aig.com returns a 49-byte text/html body ("You are not authorized, Forbidden,
+      Contact AIG HD") to anonymous callers. No authenticated response could be observed, so the
+      error envelope behind the proxy is unknown.
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      No OpenAPI or Swagger document was found on www.aig.com, developer.aig.com,
+      commercial.api.aig.com or auth1.customerpltfm.aig.com. See x-coverage in apis.yml.
+domain_standards:
+  probed:
+    - id: acord
+      name: ACORD (insurance data and messaging standards)
+      conforms: unknown
+      evidence: >-
+        AIG is a long-standing member of the insurance industry's ACORD ecosystem, but NO AIG-served
+        contract could be read to check for ACORD message shapes — there is no OpenAPI, no WSDL and
+        no XSD on any AIG host probed. This is recorded as unknown, not as a conformance.
+    - id: soap-wsdl
+      name: SOAP / WSDL (the dominant insurance integration shape)
+      conforms: false
+      evidence: >-
+        No ?wsdl or ?singleWsdl surface is reachable — commercial.api.aig.com answers 403 to every
+        anonymous path.
+  note: >-
+    REWARD-ONLY. Insurance has real domain standards (ACORD AL3/XML/NGDS), but none could be
+    evidenced from an AIG-served contract, so none is claimed. An unevidenced standard is not a
+    conformance.
+certifications:
+  published: false
+  note: >-
+    No trust center, SOC 2, ISO 27001 or PCI attestation page was found on aig.com. AIG's public
+    security page describes the vulnerability disclosure program only. No Compliance pointer is
+    emitted.

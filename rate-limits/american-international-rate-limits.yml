@@ -1,0 +1,28 @@
+generated: '2026-09-02'
+method: probed
+source: anonymous probes of https://commercial.api.aig.com (2026-09-02)
+provider: American International Group (AIG)
+providerId: american-international
+limit_count: 0
+rate_limits: []
+headers:
+  observed: []
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was observed on any anonymous response from
+    commercial.api.aig.com. Anonymous calls are terminated by the Okta policy proxy before they
+    reach an application, so any rate limiting AIG applies downstream is not observable without
+    credentials.
+exhaustion_status: unknown
+description: >-
+  AIG documents no rate limits. There is no public API reference in which a limit could be stated,
+  and the gateway's anonymous rejections carry no rate-limit signalling. An agent integrating with
+  AIG has no runtime signal for pacing and would have to discover limits by hitting them.
+observations:
+  - url: https://commercial.api.aig.com/
+    status: 403
+    body: 'You are not authorized, Forbidden, Contact AIG HD'
+    rate_limit_headers: none
+  - url: https://commercial.api.aig.com/pmp-gateway/c2a/pmp-ext-gtw-api
+    status: 400
+    body: '{"error":"Protect Proxy via okta Service Policy: The message does not contain the Authorization header"}'
+    rate_limit_headers: none
