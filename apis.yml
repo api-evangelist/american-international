@@ -21,7 +21,7 @@ tags:
   - Cyber Insurance
   - Commercial Insurance
   - Global Insurance
-  - Financial-Services
+  - Financial Services
   - Reinsurance
   - Fortune 500
 tags_raw:
@@ -33,6 +33,7 @@ tags_raw:
   - Financial Services
   - Reinsurance
   - Fortune 500
+  - Financial-Services
 type: Index
 deliveryModel:
   model: unknown
