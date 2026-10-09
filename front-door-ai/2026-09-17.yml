@@ -7,14 +7,19 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.aig.com
   final_host: www.aig.com
-  ownership: own
-  owner: american-international
-  shares_host_with: null
+  ownership: shared
+  owner: aig
+  shares_host_with:
+  - aig
+  - aig-aerospace
   inherited_from: null
+  alias_of: null
   verdict: scored
-  score: 2
+  score: null
+  band: null
+  band_label: null
   host_score: 2
-  density: 0.92
+  density: null
   words: 2171
   tiers:
     agentic: 0
