@@ -1,4 +1,4 @@
-# American International Group (AIG) (american-international)
+# American International Group (AIG)
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,58 +64,105 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-American International Group (AIG) is one of the world's most extensive international insurance organizations, operating in more than 200 countries and jurisdictions. AIG provides a broad range of property casualty insurance, life insurance, retirement solutions, and other financial services to commercial and individual customers worldwide. The company's offerings include casualty, property, cyber, professional liability, management liability, marine, aviation, energy, trade credit, and private client insurance.
+American International Group (AIG) is one of the world's most extensive international insurance organizations, operating in more than 200 countries and jurisdictions. AIG provides a broad range of property casualty insurance, life insurance, retirement solutions, and other financial services to commercial and individual customers worldwide. The company's offerings include casualty, property, cyber, professional liability, management liability, marine, aviation, energy, trade credit, and private client insurance. AIG runs a live production API gateway at commercial.api.aig.com behind an Okta "Protect Proxy" policy, and its customer identity host auth1.customerpltfm.aig.com serves anonymous OpenID Connect and OAuth 2.0 authorization-server metadata. AIG publishes no OpenAPI, no public API reference, no SDK and no self-service signup — API credentials are provisioned to appointed brokers, producers and clients through myAIG and the Producer Management Portal. AIG's own developer portal host, developers.aig.com, is still indexed by search engines but refused TCP connections when probed on 2026-09-02.
 
-**URL:** [https://www.aig.com](https://www.aig.com)
+**Areas:** Insurance · Property and Casualty · Cyber Insurance · Commercial Insurance · Global Insurance · Financial Services · Reinsurance · Fortune 500
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## American International Group (AIG) on APIs.io
 
-## Tags:
+Everything profiled for American International Group (AIG) is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/american-international/](https://apis.io/providers/american-international/)** — or go straight to one of the APIs or properties below.
 
- - Insurance, Property Casualty, Cyber Insurance, Commercial Insurance, Global Insurance, Financial Services, Reinsurance
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2024-11-15
-- **Modified:** 2026-04-19
+#### Security (3)
 
-## Common Properties
+Authentication, trust centre, and vulnerability disclosure.
+
+- [American International Authentication](https://apis.io/security/american-international/american-international-authentication/)
+- [American International Domain Security](https://apis.io/security/american-international/american-international-domain-security/)
+- [American International Vulnerability Disclosure](https://apis.io/security/american-international/american-international-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [American International Scopes](https://apis.io/scopes/american-international/american-international-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [American International Plans Pricing](https://apis.io/plans/american-international/american-international-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [American International Rate Limits](https://apis.io/rate-limits/american-international/american-international-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.aig.com)
+- [Documentation](https://www.aig.com/business)
+- [Support](https://www.aig.com/home/contact)
+- [Blog](https://www.aig.com/home/newsroom/stories)
+- [Security](https://www.aig.com/home/about/cyber-and-information-security/vulnerability-disclosure)
+- [Terms of service](https://www.aig.com/terms-of-use)
+- [Privacy policy](https://www.aig.com/privacy-policy)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| Commercial Property and Casualty Insurance | Comprehensive commercial insurance including excess casualty, foreign casualty, primary coverage, commercial property, and builders risk for global businesses. |
-| Cyber Insurance | Cyber liability coverage protecting businesses from data breaches, ransomware, business interruption, and regulatory penalties across global operations. |
-| Management and Professional Liability | Directors and officers liability, employment practices liability, errors and omissions, and fiduciary liability for corporate clients worldwide. |
-| Marine and Aviation Insurance | Ocean cargo, inland marine, marine liability, aviation hull, and aviation liability coverage for transportation and logistics industries. |
-| Trade Credit and Political Risk | Insurance protecting businesses from commercial payment defaults and political risks in domestic and cross-border trade transactions. |
-| IntelliRisk Advanced Platform | Digital client portal enabling claims filing, risk data access, loss reporting, and risk management analytics across 100+ countries. |
-| Private Client Insurance | High-net-worth individual insurance including homes, autos, art, jewelry, and personal liability through AIG's Private Client Group. |
-| Global Network Insurance | Multinational insurance programs and network solutions coordinating coverage for corporations operating across multiple international jurisdictions. |
+**Kin Score 24.0** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 38.1 |
+| Access clarity | 21.1 |
 
-| Name | Description |
-|------|-------------|
-| Multinational Corporate Risk Management | Coordinating insurance programs for corporations with operations in multiple countries, ensuring consistent coverage under local regulatory requirements. |
-| Cyber Risk Transfer | Transferring enterprise cyber risk through comprehensive cyber liability policies covering first-party losses and third-party liability. |
-| Executive and Corporate Governance Protection | Protecting executives and corporate boards from personal liability through directors and officers, fiduciary, and employment practices liability coverage. |
-| International Trade Finance | Protecting banks, exporters, and buyers from payment default and political risks in international trade transactions. |
-| High-Net-Worth Personal Lines | Providing specialized coverage for high-value homes, vehicles, art collections, jewelry, and personal liability for affluent individuals. |
+**Agent readiness 20.5** — agent-aware
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
 
-| Name | Description |
-|------|-------------|
-| Broker and Agent Management Systems | Integration with insurance broker platforms and agent management systems for policy quoting, binding, and servicing across AIG's commercial lines. |
-| IntelliRisk Client Portal | Digital portal integrating with client risk management systems for claims reporting, loss data analysis, and risk control services globally. |
-| Reinsurance Platforms | Integration with reinsurance markets and treaty reinsurers to manage AIG's risk retention and cession across global insurance programs. |
+**Regulatory alignment 42.1** — Insurance
 
-## Maintainers
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/american-international/](https://apis.io/providers/american-international/).
 
-**FN:** Kin Lane
+## How this profile is made
 
-**Email:** info@apievangelist.com
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for American International Group (AIG): the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/american-international/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
